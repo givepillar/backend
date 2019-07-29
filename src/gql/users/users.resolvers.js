@@ -1,7 +1,9 @@
 import UsersEngine from './users.engine'
 export default {
   Query: {
-    viewer: async (_, __, ctx) => UsersEngine(ctx).viewer(),
+    viewer: async (_, __, ctx) => {
+      return UsersEngine(ctx).viewer()
+    },
   },
   User: {
     portfolio: async (_, { id }, ctx) => {},

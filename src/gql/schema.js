@@ -1,4 +1,5 @@
 import { makeExecutableSchema } from 'apollo-server-express'
+import { merge } from 'lodash'
 import commonSchema from './common/common.schema'
 import commonResolvers from './common/common.resolvers'
 import transactionsSchema from './transactions/transactions.schema'
@@ -30,17 +31,29 @@ const typeDefs = [
   authSchema,
 ]
 
-const resolvers = {
-  ...commonResolvers,
-  ...transactionsResolvers,
-  ...usersResolvers,
-  ...organizationsResolvers,
-  ...bundlesResolvers,
-  ...donationsResolvers,
-  ...chargesResolvers,
-  ...categoriesResolvers,
-  ...authResolvers,
-}
+// const resolvers = {
+//   ...commonResolvers,
+//   ...transactionsResolvers,
+//   ...usersResolvers,
+//   ...organizationsResolvers,
+//   ...bundlesResolvers,
+//   ...donationsResolvers,
+//   ...chargesResolvers,
+//   ...categoriesResolvers,
+//   ...authResolvers,
+// }
+
+const resolvers = merge(
+  usersResolvers,
+  commonResolvers,
+  transactionsResolvers,
+  organizationsResolvers,
+  bundlesResolvers,
+  donationsResolvers,
+  chargesResolvers,
+  categoriesResolvers,
+  authResolvers
+)
 
 export default makeExecutableSchema({
   typeDefs,

@@ -6,12 +6,16 @@ import User from '../../dbmodels/user.model'
 
 const UsersEngine = context => ({
   viewer: () => {
-    console.log('HERE')
-    console.log(context)
     return context.user
   },
   createUser: async ({ firstName, lastName, email, addressId, credentialsId }) => {
-    return await User.query().insert({ firstName, lastName, email, addressId, credentialsId })
+    console.log('ADDRESS')
+    console.log(addressId)
+    const body = { firstName, lastName, email, addressId: null, credentialsId }
+    console.log(body)
+    return await User.query()
+      .insert(body)
+      .returning('*')
   },
   fromId: id => {
     return User.query().findById(id)

@@ -5,6 +5,7 @@ export default gql`
 
   type Query {
     test: String
+    a: Boolean
   }
 
   type Mutation {

@@ -20,36 +20,38 @@ const AuthEngine = context => ({
 
     // 1. CREATE ADDRESS and ADD to 'addresses' TABLE
     const address = zipCode ? await Address.query().insert({ zipCode }) : null
-    const addressId = address ? address.id : null
 
     // 2. HASH PW and CREATE CREDENTIALS and ADD to 'credentials' TABLE
+    const user = await new Promise((resolve, reject) => {
+      bcrypt.hash(password, SALT_ROUNDS, async (err, hash) => {
+        if (err) reject(err)
+        const credentials = await Credentials.query()
+          .insert({
+            verified: true, // user automatically verified when they go through FB
+            verificationCode: null,
+            password: hash,
+          })
+          .returning('*')
 
-    try {
-      const hash = await bcrypt.hash(password, SALT_ROUNDS)
-      const credentials = await Credentials.query()
-        .insert({
-          verificationCode: await generateRefreshToken(),
-          password: hash,
+        // 3. CREATE USER and ADD to 'users' TABLE
+        const user = await UsersEngine(context).createUser({
+          firstName,
+          lastName,
+          email,
+          addressId: address ? address.id : null,
+          credentialsId: credentials.id,
         })
-        .returning('*')
 
-      // 3. CREATE USER and ADD to 'users' TABLE
-      const user = await UsersEngine(context).createUser({
-        firstName,
-        lastName,
-        email,
-        addressId,
-        credentialsId: credentials.id,
+        resolve(user)
       })
+    })
+    if (user)
       return {
         user,
         success: true,
         message: 'signup successful',
       }
-    } catch (e) {
-      console.error(e)
-      throw new ApolloError('error hashing password', 500)
-    }
+    throw new ApolloError('failed to sign up user')
   },
   signupUserFacebook: async facebookCode => {
     // populate user object

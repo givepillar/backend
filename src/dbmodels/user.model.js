@@ -22,7 +22,9 @@ class User extends BaseModel {
         id: { type: 'string', format: 'uuid' },
         firstName: { type: 'string' },
         lastName: { type: 'string' },
-        addressId: { type: 'string', format: 'uuid' },
+        addressId: {
+          anyOf: [{ type: 'string', format: 'uuid' }, { type: 'null' }],
+        },
         credentialsId: { type: 'string', format: 'uuid' },
         email: { type: 'string' },
         role: { type: 'string', enum: ['DONOR', 'ADMIN'] },

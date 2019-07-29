@@ -13,7 +13,9 @@ class Credentials extends BaseModel {
         id: { type: 'string', format: 'uuid' },
         password: { type: 'string' },
         facebookAccessToken: { type: 'string' },
-        verificationCode: { type: 'string' },
+        verificationCode: {
+          anyOf: [{ type: 'string' }, { type: 'null' }],
+        },
         refreshToken: { type: 'string' },
         verified: { type: 'boolean' },
       },
