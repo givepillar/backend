@@ -1,7 +1,7 @@
 import { omit } from '../utils/arrays'
 import { Model } from 'objection'
 
-export class BaseModel extends Model {
+class BaseModel extends Model {
   static $secureFields = []
 
   static get modelPaths() {
@@ -12,3 +12,5 @@ export class BaseModel extends Model {
     return omit(super.$formatJson(json, options).filter(), this.constructor.$secureFields)
   }
 }
+
+module.exports = BaseModel

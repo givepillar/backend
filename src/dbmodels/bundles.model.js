@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 import { Model } from 'objection'
 
 class Bundle extends BaseModel {
@@ -62,3 +62,5 @@ class Bundle extends BaseModel {
     }
   }
 }
+
+module.exports = Bundle

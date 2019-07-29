@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
 class Category extends BaseModel {
   static get tableName() {
@@ -20,3 +20,5 @@ class Category extends BaseModel {
     }
   }
 }
+
+module.exports = Category

@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 import { Model } from 'objection'
 
 class Organization extends BaseModel {
@@ -86,3 +86,5 @@ class Organization extends BaseModel {
     }
   }
 }
+
+module.exports = Organization

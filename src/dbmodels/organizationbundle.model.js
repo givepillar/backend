@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
 class OrganizationBundle extends BaseModel {
   static get tableName() {
@@ -41,3 +41,5 @@ class OrganizationBundle extends BaseModel {
     }
   }
 }
+
+module.exports = OrganizationBundle

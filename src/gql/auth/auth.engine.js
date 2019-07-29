@@ -4,7 +4,6 @@ import Address from '../../dbmodels/address.model'
 import { generateAccessToken, generateRefreshToken } from '../../utils/auth'
 import bcrypt from 'bcryptjs'
 import User from '../../dbmodels/user.model'
-import { jwt } from 'jsonwebtoken'
 import { AuthenticationError, ApolloError } from 'apollo-server-core'
 
 const SALT_ROUNDS = 12
@@ -79,79 +78,67 @@ const AuthEngine = context => ({
   verifyNewUser: async ({ verificationCode }) => {
     // generate refresh token
     const refreshToken = await generateRefreshToken()
+    const credentials = await Credentials.query()
+      .patch({ refreshToken })
+      .returning('*')
+    const user = await User.query()
+      .where({ credentialsId: credentials.id })
+      .first()
 
     // hash refresh token before attempting to add to DB
     // ADD CREDENTIALS
-    const credentials = await new Promise((resolve, reject) => {
-      bcrypt.hash(refreshToken, SALT_ROUNDS, async (err, hash) => {
-        if (err) reject(err)
-        resolve(
-          await Credentials.query()
-            .where('verificationCode', verificationCode)
-            .first()
-            .patch({ verified: true, verificationCode: null, refreshToken: hash })
-            .returning('*')
-        )
-      })
-    })
+    // const credentials = await new Promise((resolve, reject) => {
+    //   bcrypt.hash(refreshToken, SALT_ROUNDS, async (err, hash) => {
+    //     if (err) reject(err)
+    //     resolve(
+    //       await Credentials.query()
+    //         .where('verificationCode', verificationCode)
+    //         .first()
+    //         .patch({ verified: true, verificationCode: null, refreshToken: hash })
+    //         .returning('*')
+    //     )
+    //   })
+    // })
 
     // if above ADD was successful (verification code was matched)
     // then return an access token with success, otherwise failure
-    return credentials
-      ? {
-          success: true,
-          message: 'verification successful',
-          accessToken: await generateAccessToken(),
-        }
-      : {
-          success: false,
-          message: 'verification failed',
-        }
+    if (credentials) {
+      return successfulLoginResponse({ id: user.id }, 'verification successful')
+    }
+    throw new AuthenticationError('verification failed')
   },
-  loginUser: async ({ email, password }) => {
+  loginUser: async ({ email, password }, checkVerification = false) => {
     const user = await User.query()
       .where('email', email)
       .first()
-    const hash = await user.$relatedQuery('credentials').password
+    const credentials = await user.$relatedQuery('credentials')
 
     const success = await new Promise((resolve, reject) => {
-      bcrypt.compare(password, hash, async (err, res) => {
+      bcrypt.compare(password, credentials.password, async (err, res) => {
         if (err) reject(err)
-        resolve(res && user.verified)
+        resolve(checkVerification ? res && credentials.verified : res)
       })
     })
-    if (success) {
-      return {
-        success,
-        message: 'login successful',
-        accessToken: await generateAccessToken(user.id),
-      }
-    }
+    if (success) return successfulLoginResponse({ id: user.id }, 'login successful')
     throw new AuthenticationError('login failed')
   },
   loginUserFacebook: async ({ email, password }) => {
     // THIS RUNS IN THE CASE THAT A USER IS LOGGED OUT AND HAS TO SIGN BACK IN THROUGH FACEBOOL
     // DO I CHECK AGAINST OUR REFRESH TOKEN, OR DOES A NEW FACEBOOK CODE GET SENT, OR WHAT?
   },
-  refreshAccess: async refreshToken => {
+  refreshAccess: async (refreshToken, checkVerification = false) => {
     const user = await User.query()
       .where('email', email)
       .first()
-    const hash = await user.$relatedQuery('credentials').refreshToken
+    const credentials = await user.$relatedQuery('credentials')
     const success = await new Promise((resolve, reject) => {
-      bcrypt.compare(refreshToken, hash, async (err, res) => {
+      bcrypt.compare(refreshToken, credentials.refreshToken, async (err, res) => {
         // make sure user is verified AND the password is correct
         if (err) reject(err)
-        resolve(res && user.verified)
+        resolve(checkVerification ? res && credentials.verified : res)
       })
     })
-    if (success) {
-      return {
-        success,
-        message: 'refresh successful',
-        accessToken: await generateAccesstToken(user.id),
-      }
-    }
+    if (success) return successfulLoginResponse({ id: user.id }, 'refresh successful')
     throw new AuthenticationError('invalid refresh token')
   },
   requestChangePassword: async () => {
@@ -186,11 +173,7 @@ const AuthEngine = context => ({
         })
       })
       if (success)
-        return {
-          success,
-          message: 'password change successful',
-          accessToken: generateAccessToken(userFromEmail.id),
-        }
+        return successfulLoginResponse({ id: userFromEmail.id }, 'password change successful')
       throw new AuthenticationError('password change unsuccessful')
     }
   },
@@ -200,6 +183,12 @@ const AuthEngine = context => ({
       .returning('*')
     return { success: true, message: 'delete successful' }
   },
+})
+
+const successfulLoginResponse = async (userInfo, message) => ({
+  success: true,
+  message,
+  accessToken: await generateAccessToken(userInfo.id),
 })
 
 export default AuthEngine

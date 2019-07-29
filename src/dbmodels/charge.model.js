@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 import { Model } from 'objection'
 
 class Charge extends BaseModel {
@@ -37,3 +37,5 @@ class Charge extends BaseModel {
     }
   }
 }
+
+module.exports = Charge

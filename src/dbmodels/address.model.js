@@ -1,6 +1,6 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
-export default class Address extends BaseModel {
+class Address extends BaseModel {
   static get tableName() {
     return 'addresses'
   }
@@ -20,3 +20,5 @@ export default class Address extends BaseModel {
     }
   }
 }
+
+module.exports = Address

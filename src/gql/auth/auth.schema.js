@@ -30,13 +30,6 @@ export default gql`
     verificationCode: String!
   }
 
-  type ChangePasswordResponse implements Response {
-    accessToken: String!
-    code: String
-    success: Boolean!
-    message: String
-  }
-
   type SignupResponse implements Response {
     user: User
     code: String
@@ -59,7 +52,7 @@ export default gql`
     verifyNewUser(email: String!, verificationCode: String!): LoginResponse!
     loginUser(credentials: AuthInput!): LoginResponse!
     refreshAccess(refreshToken: String!): LoginResponse!
-    changePassword(newPassword: ChangePasswordInput!): ChangePasswordResponse!
+    changePassword(newPassword: ChangePasswordInput!): LoginResponse!
     requestChangePassword: Response!
     deleteAccount: Response!
   }

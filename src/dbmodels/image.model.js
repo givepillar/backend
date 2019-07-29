@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
 class Image extends BaseModel {
   static get tableName() {
@@ -17,3 +17,5 @@ class Image extends BaseModel {
     }
   }
 }
+
+module.exports = Image

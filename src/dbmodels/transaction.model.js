@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
 class Transaction extends BaseModel {
   static get tableName() {
@@ -44,3 +44,5 @@ class Transaction extends BaseModel {
     }
   }
 }
+
+module.exports = Transaction

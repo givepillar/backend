@@ -1,6 +1,6 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
-export default class Credentials extends BaseModel {
+class Credentials extends BaseModel {
   static get tableName() {
     return 'credentials'
   }
@@ -20,3 +20,5 @@ export default class Credentials extends BaseModel {
     }
   }
 }
+
+module.exports = Credentials

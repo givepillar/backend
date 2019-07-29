@@ -1,6 +1,6 @@
-import { BaseModel } from './base.model'
+import BaseModel from './base.model'
 
-class OrganizationBundle extends BaseModel {
+class DonationTransaction extends BaseModel {
   static get tableName() {
     return 'donations_transactions'
   }
@@ -40,3 +40,5 @@ class OrganizationBundle extends BaseModel {
     }
   }
 }
+
+module.exports = DonationTransaction

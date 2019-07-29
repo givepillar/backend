@@ -39,6 +39,7 @@ const context = async ({ req }) => {
 
   // try to grab user with given token
   const user = hasAuth ? await userFromAccessToken(token) : null
+  console.log(user)
 
   return {
     user,
