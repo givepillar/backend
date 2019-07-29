@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model'
 
-class Credentials extends BaseModel {
+export default class Credentials extends BaseModel {
   static get tableName() {
     return 'credentials'
   }
@@ -11,11 +11,11 @@ class Credentials extends BaseModel {
       required: [],
       properties: {
         id: { type: 'string', format: 'uuid' },
-        userId: { type: 'integer', format: 'uuid' },
         password: { type: 'string' },
-        facebookCode: { type: 'string' },
+        facebookAccessToken: { type: 'string' },
         verificationCode: { type: 'string' },
         refreshToken: { type: 'string' },
+        verified: { type: 'boolean' },
       },
     }
   }

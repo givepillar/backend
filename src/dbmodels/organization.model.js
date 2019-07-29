@@ -30,12 +30,12 @@ class Organization extends BaseModel {
 
   static get relationMappings() {
     // import account model here
-    const Account = require(super.modelPaths() + '/account.model')
-    const Address = require(super.modelPaths() + '/address.model')
-    const Category = require(super.modelPaths() + '/category.model')
-    const Image = require(super.modelPaths() + '/image.model')
-    const Bundle = reqire(super.modelPaths() + 'bundle.model')
-    const OrganizationBundle = reqire(super.modelPaths() + 'organizationbundle.model')
+    const Account = require(BaseModel.modelPaths + '/account.model')
+    const Address = require(BaseModel.modelPaths + '/address.model')
+    const Category = require(BaseModel.modelPaths + '/category.model')
+    const Image = require(BaseModel.modelPaths + '/image.model')
+    const Bundle = reqire(BaseModel.modelPaths + 'bundle.model')
+    const OrganizationBundle = reqire(BaseModel.modelPaths + 'organizationbundle.model')
 
     return {
       account: {

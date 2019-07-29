@@ -1,7 +1,7 @@
 import { BaseModel } from './base.model'
 import { Model } from 'objection'
 
-class User extends BaseModel {
+export default class User extends BaseModel {
   static get tableName() {
     return 'users'
   }
@@ -23,8 +23,8 @@ class User extends BaseModel {
         firstName: { type: 'string' },
         lastName: { type: 'string' },
         addressId: { type: 'string', format: 'uuid' },
-        email: { type: 'string' },
         credentialsId: { type: 'string', format: 'uuid' },
+        email: { type: 'string' },
         role: { type: 'string', enum: ['DONOR', 'ADMIN'] },
         accountId: { type: 'string', format: 'uuid' },
       },
@@ -32,9 +32,9 @@ class User extends BaseModel {
   }
 
   static get relationMappings() {
-    const Address = require(super.modelPaths() + '/address.model')
-    const Credentials = require(super.modelPaths() + '/credentials.model')
-    const Account = require(super.modelPaths() + 'account.model')
+    const Address = require(BaseModel.modelPaths + '/address.model')
+    const Credentials = require(BaseModel.modelPaths + '/credentials.model')
+    const Account = require(BaseModel.modelPaths + '/account.model')
 
     return {
       address: {
@@ -45,20 +45,20 @@ class User extends BaseModel {
           to: 'addresses.id',
         },
       },
-      credentials: {
-        relation: Model.HasOneRelation,
-        modelClass: Credentials,
-        join: {
-          from: 'users.credentialsId',
-          to: 'credentials.id',
-        },
-      },
       account: {
         relation: Model.HasOneRelation,
         modelClass: Account,
         join: {
           from: 'users.accountId',
           to: 'accounts.id',
+        },
+      },
+      credentials: {
+        relation: Model.HasOneRelation,
+        modelClass: Credentials,
+        join: {
+          from: 'users.credentialsId',
+          to: 'credentials.id',
         },
       },
     }

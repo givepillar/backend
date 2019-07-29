@@ -18,8 +18,8 @@ class OrganizationBundle extends BaseModel {
   }
 
   static get relationMappings() {
-    const Transaction = require(super.modelPaths() + '/transaction.model')
-    const Donation = require(super.modelPaths() + '/donation.model')
+    const Transaction = require(BaseModel.modelPaths + '/transaction.model')
+    const Donation = require(BaseModel.modelPaths + '/donation.model')
     return {
       transaction: {
         relation: BaseModel.HasOneRelation,

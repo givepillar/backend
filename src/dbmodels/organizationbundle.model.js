@@ -19,8 +19,8 @@ class OrganizationBundle extends BaseModel {
   }
 
   static get relationMappings() {
-    const Organization = require(super.modelPaths() + '/organization.model')
-    const Bundle = require(super.modelPaths() + '/bundle.model')
+    const Organization = require(BaseModel.modelPaths + '/organization.model')
+    const Bundle = require(BaseModel.modelPaths + '/bundle.model')
     return {
       organization: {
         relation: BaseModel.HasOneRelation,

@@ -1,10 +1,9 @@
-export const up = knex => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex => {
   return knex.schema.createTable('users', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
+    baseFields(table, knex)
 
     table
       .string('email')
@@ -15,14 +14,14 @@ export const up = knex => {
     table.string('lastName').notNullable()
 
     table
-      .foreign('accountId')
+      .uuid('accountId')
       .references('id')
       .inTable('accounts')
       .nullable()
 
-    // user's credentials
+    // credentials of this user
     table
-      .foreign('credentialsId')
+      .uuid('credentialsId')
       .references('id')
       .inTable('credentials')
       .notNullable()
@@ -33,13 +32,13 @@ export const up = knex => {
       .defaultTo('DONOR')
 
     table
-      .foreign('addressId')
+      .uuid('addressId')
       .references('id')
       .inTable('addresses')
       .nullable()
   })
 }
 
-export const down = knex => {
+module.exports.down = knex => {
   return knex.schema.dropTable('users')
 }

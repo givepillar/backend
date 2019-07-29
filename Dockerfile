@@ -2,7 +2,9 @@
 FROM node:10-alpine
 
 RUN apk add --update \
-    alpine-sdk
+    alpine-sdk \
+    build-base \
+    python
 
 ENV HOME=/app
 

@@ -45,7 +45,7 @@ export default gql`
   }
 
   type LoginResponse implements Response {
-    accessToken: String!
+    accessToken: String
     code: String
     success: Boolean!
     message: String
@@ -58,7 +58,6 @@ export default gql`
     signupUserFacebook(facebookCode: String!): SignupResponse!
     verifyNewUser(email: String!, verificationCode: String!): LoginResponse!
     loginUser(credentials: AuthInput!): LoginResponse!
-    loginUserFacebook(facebookCode: String!): LoginResponse!
     refreshAccess(refreshToken: String!): LoginResponse!
     changePassword(newPassword: ChangePasswordInput!): ChangePasswordResponse!
     requestChangePassword: Response!

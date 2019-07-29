@@ -1,10 +1,9 @@
-export const up = knex => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex => {
   return knex.schema.createTable('images', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
+    baseFields(table, knex)
 
     // url of image
     table.string('url').notNullable()
@@ -14,6 +13,6 @@ export const up = knex => {
   })
 }
 
-export const down = knex => {
+module.exports.down = knex => {
   return knex.schema.dropTable('images')
 }

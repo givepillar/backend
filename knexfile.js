@@ -7,8 +7,8 @@ const migrations = {
 
 module.exports = {
   development: {
-    client: 'postgresql',
-    connection: 'postgres://localhost/dev_db',
+    client: 'pg',
+    connection: process.env.DB_URL,
     pool: {
       min: 2,
       max: 10,

@@ -1,16 +1,14 @@
-export const up = knex => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex => {
   return knex.schema.createTable('credentials', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
-
+    baseFields(table, knex)
     // password... expects to be encrypted BEFORE insert
     table.string('password').nullable()
 
     // facebook code associated with FB auth
-    table.string('facebookCode').nullable()
+    table.string('facebookAccessToken').nullable()
 
     // whether user's signup action has been verified (validation email)
     table
@@ -19,13 +17,16 @@ export const up = knex => {
       .defaultTo(false)
 
     // code to match when a user is confirming email or changing password
-    table.string('verificationCode').nullable()
+    table
+      .string('verificationCode')
+      .nullable()
+      .unique()
 
     // refresh token for OAuth
     table.string('refreshToken').nullable()
   })
 }
 ;``
-export const down = knex => {
+module.exports.down = knex => {
   return knex.schema.dropTable('credentials')
 }

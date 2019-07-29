@@ -1,10 +1,9 @@
-export const up = knex => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex => {
   return knex.schema.createTable('accounts', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
+    baseFields(table, knex)
 
     // amount of money in the platform owned by the account
     // table.integer('balance').defaultTo(0)
@@ -26,6 +25,6 @@ export const up = knex => {
   })
 }
 
-export const down = knex => {
+module.exports.down = knex => {
   return knex.schema.dropTable('accounts')
 }

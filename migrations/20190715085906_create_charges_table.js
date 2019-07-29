@@ -1,14 +1,13 @@
-export const up = knex => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex => {
   return knex.schema.createTable('charges', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
+    baseFields(table, knex)
 
     // foreign key to account we're charging
     table
-      .foreign('accountId')
+      .uuid('accountId')
       .notNullable()
       .references('id')
       .inTable('accounts')
@@ -33,6 +32,6 @@ export const up = knex => {
   })
 }
 
-export const down = knex => {
+module.exports.down = knex => {
   return knex.schema.dropTable('charges')
 }

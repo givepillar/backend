@@ -22,7 +22,7 @@ class Transaction extends BaseModel {
 
   static get relationMappings() {
     // import account model here
-    const Account = require(super.modelPaths() + '/account.model')
+    const Account = require(BaseModel.modelPaths + '/account.model')
 
     return {
       to: {

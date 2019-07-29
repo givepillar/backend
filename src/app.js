@@ -8,6 +8,8 @@ import schema from './gql/schema'
 import { Model } from 'objection'
 import Knex from 'knex'
 import knexConfig from '../knexfile'
+import AuthEngine from './gql/auth/auth.engine'
+import { userFromAccessToken } from './utils/auth'
 
 /**
  * Initialize dotenv
@@ -32,11 +34,11 @@ app.use(
 app.use(cookieParser())
 
 const context = async ({ req }) => {
-  const token = req.headers.authentication || ''
-  if (token.startsWith('Bearer ')) token = token.slice(7, token.length)
+  const hasAuth = req.headers.authentication && req.headers.authentication.startsWith('Bearer ')
+  const token = hasAuth ? req.headers.authentication.split(' ')[1] : ''
 
   // try to grab user with given token
-  const user = null
+  const user = hasAuth ? await userFromAccessToken(token) : null
 
   return {
     user,

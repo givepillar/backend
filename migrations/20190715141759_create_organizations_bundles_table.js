@@ -1,19 +1,19 @@
-export const up = knex => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex => {
   return knex.schema.createTable('organizations_bundles', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
+
+    baseFields(table, knex)
 
     table
-      .foreign('organizationId')
+      .uuid('organizationId')
       .references('id')
       .inTable('organizations')
       .notNullable()
 
     table
-      .foreign('bundleId')
+      .uuid('bundleId')
       .references('id')
       .inTable('bundles')
       .notNullable()
@@ -22,6 +22,6 @@ export const up = knex => {
   })
 }
 
-export const down = knex => {
+module.exports.down = knex => {
   return knex.schema.dropTable('organizations_bundles')
 }

@@ -1,23 +1,22 @@
-export const up = knex => {
-  knex.schema.createTable('organizaions', table => {
+const { baseFields } = require('../dbutils')
+
+module.exports.up = knex =>
+  knex.schema.createTable('organizations', table => {
     // BASIC TABLE SETUP
-    table.uuid('id').primary()
-    table.dateTime('createdAt').notNullable()
-    table.dateTime('updatedAt').nullable()
-    table.dateTime('deletedAt').nullable()
+    baseFields(table, knex)
 
     // name of organization
     table.string('name').notNullable()
 
     // organization's account
     table
-      .foreign('accountId')
+      .uuid('accountId')
       .references('id')
       .inTable('accounts')
 
     // organization's address
     table
-      .foreign('addressId')
+      .uuid('addressId')
       .references('id')
       .inTable('addresses')
 
@@ -41,7 +40,7 @@ export const up = knex => {
 
     // category of organization
     table
-      .foreign('categoryId')
+      .uuid('categoryId')
       .references('id')
       .inTable('categories')
 
@@ -50,15 +49,12 @@ export const up = knex => {
 
     // image of organization
     table
-      .foreign('imageId')
+      .uuid('imageId')
       .references('id')
       .inTable('images')
       .nullable()
 
     table.string('slug').notNullable()
   })
-}
 
-export const down = knex => {
-  knex.schema.dropTable('organizations')
-}
+module.exports.down = knex => knex.schema.dropTable('organizations')

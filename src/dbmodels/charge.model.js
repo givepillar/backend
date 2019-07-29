@@ -23,7 +23,7 @@ class Charge extends BaseModel {
   }
 
   static get relationMappings() {
-    const Account = require(super.modelPaths() + '/account.model')
+    const Account = require(BaseModel.modelPaths + '/account.model')
 
     return {
       account: {

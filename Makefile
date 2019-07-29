@@ -1,4 +1,4 @@
-API=graphql_app_1
+API=backend_app_1
 
 db/up:
 	docker exec $(API) npx knex-migrate up
@@ -14,3 +14,6 @@ build:
 
 start:
 	docker-compose up
+
+down:
+	docker-compose down -v

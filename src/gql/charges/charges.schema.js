@@ -25,7 +25,7 @@ export default gql`
 
   ####################### M U T A T I O N S ##########################################
   extend type Mutation {
-    newStripeCharge(stripeId: String!): Boolean! # needs a little work
+    newStripeCard(stripeCardId: String!): Boolean!
   }
   ################################################################################
 `

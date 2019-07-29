@@ -4,11 +4,7 @@ export default gql`
   ####################### Q U E R I E S ##########################################
 
   extend type Query {
-    # userById(id: ID!): User!
-
     viewer: User!
-
-    # userByEmail(email: String!): User!
   }
 
   ###############################################################################

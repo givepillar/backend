@@ -7,9 +7,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
       - POSTGRES_DB=pillar
+      - POSTGRES_USER=my_butt
+      - POSTGRES_PASSWORD=my_ass
   app:
     build: .
     image: bengershuny/node-app:10
@@ -18,12 +18,13 @@ services:
       - /app/node_modules
     entrypoint: ['yarn', 'start']
     ports:
-      - 5000:5000
+      - 4000:4000
     depends_on:
       - db
     environment:
+      - PORT=4000
       - NODE_ENV=development
-      - DB_URL=postgres://root:root@db:5432/pillar
+      - DB_URL=postgres://my_butt:my_ass@db:5432/pillar
     links:
       - db
 volumes:
