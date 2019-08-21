@@ -109,22 +109,25 @@ const AuthEngine = context => ({
     }
     throw new AuthenticationError('verification failed')
   },
+
   loginUser: async ({ email, password }, checkVerification = false) => {
     const user = await User.query()
       .where('email', email)
       .first()
-    if (!user) throw new AuthenticationError('email does not exist')
-    const credentials = await user.$relatedQuery('credentials')
 
-    const success = await new Promise((resolve, reject) => {
-      bcrypt.compare(password, credentials.password, async (err, res) => {
-        if (err) reject(err)
-        resolve(checkVerification ? res && credentials.verified : res)
-      })
-    })
+    console.log('Attempting to Log In')
+
+    if (!user) throw new AuthenticationError('Incorrect Email or Password')
+
+    const credentials = await user.$relatedQuery('credentials')
+    const passwordsMatch = await bcrypt.compare(password, credentials.password)
+
+    const success = checkVerification ? passwordsMatch && credentials.verified : passwordsMatch
+
     if (success) return successfulLoginResponse({ id: user.id }, 'login successful')
     throw new AuthenticationError('login failed')
   },
+
   loginUserFacebook: async ({ email, password }) => {
     // THIS RUNS IN THE CASE THAT A USER IS LOGGED OUT AND HAS TO SIGN BACK IN THROUGH FACEBOOL
     // DO I CHECK AGAINST OUR REFRESH TOKEN, OR DOES A NEW FACEBOOK CODE GET SENT, OR WHAT?
@@ -184,7 +187,8 @@ const AuthEngine = context => ({
     const user = await User.query()
       .deleteById(context.user.id)
       .returning('*')
-    return { success: true, message: 'delete successful' }
+    // return { success: true, message: 'delete successful' }
+    return !!user
   },
 })
 

@@ -13,13 +13,16 @@ export default {
     },
     signupUserFacebook: async (p, { facebookCode }, context, _) =>
       await AuthEngine(context).signupUserFacebook(facebookCode),
+
     verifyNewUser: async (p, { email, verificationCode }, context, _) =>
       await AuthEngine(context).verifyNewUser({ email, verificationCode }),
+
     loginUser: async (p, { credentials }, context, _) =>
       await AuthEngine(context).loginUser({
         email: credentials.email,
         password: credentials.password,
       }),
+
     // loginUserFacebook: async (p, { facebookCode }, context, _) =>
     //   await AuthEngine(context).loginUserFacebook(facebookCode),
     refreshAccess: async (p, { refreshToken }, context, _) =>
