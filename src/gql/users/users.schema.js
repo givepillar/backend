@@ -22,7 +22,7 @@ export default gql`
     recommendedBundles: [Bundle!]!
     recommendedOrganizations: [Organization!]!
 
-    address: Address!
+    address: Address
     role: Role!
   }
 

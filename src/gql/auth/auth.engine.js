@@ -113,6 +113,7 @@ const AuthEngine = context => ({
     const user = await User.query()
       .where('email', email)
       .first()
+    if (!user) throw new AuthenticationError('email does not exist')
     const credentials = await user.$relatedQuery('credentials')
 
     const success = await new Promise((resolve, reject) => {

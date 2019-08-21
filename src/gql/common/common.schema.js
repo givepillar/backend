@@ -69,6 +69,12 @@ export default gql`
     startCursor: Int!
     nextCursor: Int!
   }
+
+  type ResponseType implements Response {
+    code: String
+    success: Boolean!
+    message: String
+  }
   ###############################################################################
 
   ####################### M U T A T I O N S ##########################################

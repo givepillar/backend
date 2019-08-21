@@ -31,18 +31,6 @@ const typeDefs = [
   authSchema,
 ]
 
-// const resolvers = {
-//   ...commonResolvers,
-//   ...transactionsResolvers,
-//   ...usersResolvers,
-//   ...organizationsResolvers,
-//   ...bundlesResolvers,
-//   ...donationsResolvers,
-//   ...chargesResolvers,
-//   ...categoriesResolvers,
-//   ...authResolvers,
-// }
-
 const resolvers = merge(
   usersResolvers,
   commonResolvers,

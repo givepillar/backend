@@ -9,6 +9,7 @@
     "build": "yarn clean && mkdir -p dist && babel src -s -D -d dist"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "apollo-graphql": "^0.3.3",
     "apollo-server-express": "^2.6.7",
     "babel": "^6.23.0",

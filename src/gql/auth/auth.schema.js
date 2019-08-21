@@ -53,8 +53,8 @@ export default gql`
     loginUser(credentials: AuthInput!): LoginResponse!
     refreshAccess(refreshToken: String!): LoginResponse!
     changePassword(newPassword: ChangePasswordInput!): LoginResponse!
-    requestChangePassword: Response!
-    deleteAccount: Response!
+    requestChangePassword: ResponseType!
+    deleteAccount: ResponseType!
   }
   ################################################################################
 `

@@ -10,6 +10,7 @@ import Knex from 'knex'
 import knexConfig from '../knexfile'
 import AuthEngine from './gql/auth/auth.engine'
 import { userFromAccessToken } from './utils/auth'
+import Sendgrid from './datasources/sendgrid.datasource'
 
 /**
  * Initialize dotenv
@@ -43,8 +44,12 @@ const context = async ({ req }) => {
   return {
     user,
     req, // store express req object in context
+    datasources: () => ({
+      Sendgrid: Sendgrid,
+    }),
   }
 }
+console.log('STARTING SERVER')
 
 const server = new ApolloServer({
   context,

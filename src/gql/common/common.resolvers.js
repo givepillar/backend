@@ -1,5 +1,5 @@
 export default {
-  Query: {
-    a: (root, args, context, info) => true,
+  Address: (root, args, context, info) => {
+    zip: root.zipCode
   },
 }

@@ -17,3 +17,6 @@ start:
 
 down:
 	docker-compose down -v
+
+gql/push:
+	npx apollo service:push
