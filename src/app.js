@@ -39,7 +39,11 @@ const context = async ({ req }) => {
   const token = hasAuth ? req.headers.authentication.split(' ')[1] : ''
 
   // try to grab user with given token
-  const user = hasAuth ? await userFromAccessToken(token) : null
+  let user = null
+
+  try {
+    user = hasAuth ? await userFromAccessToken(token) : null
+  } catch (e) {}
 
   return {
     user,
