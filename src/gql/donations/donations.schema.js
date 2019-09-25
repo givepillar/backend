@@ -56,6 +56,19 @@ export default gql`
     message: String
   }
 
+  type SingleDonationResponse implements Response {
+    code: String
+    success: Boolean!
+    message: String
+  }
+
+  type HostedDonationResponse implements Response {
+    sessionId: String!
+    code: String
+    success: Boolean!
+    message: String
+  }
+
   # summary of donations for an org or a bundle
   type DonationsSummary {
     numberOfDonations: Int!
@@ -69,6 +82,22 @@ export default gql`
   ####################### M U T A T I O N S ##########################################
   extend type Mutation {
     createDonation(donation: DonationInput!): DonationResponse!
+    oneTimeDonation(
+      token: String!
+      name: String!
+      email: String!
+      amount: Int!
+      bundleSlug: String!
+    ): SingleDonationResponse!
+
+    hostedDonation(
+      bundleName: String!
+      bundleDescription: String!
+      bundleSlug: String!
+      bundlePhoto: String!
+      amount: Int!
+      origin: String
+    ): HostedDonationResponse!
   }
   ################################################################################
 `

@@ -7,6 +7,7 @@ import { ApolloServer, gql } from 'apollo-server-express'
 import schema from './gql/schema'
 import { Model } from 'objection'
 import Knex from 'knex'
+import cors from 'cors'
 import knexConfig from '../knexfile'
 import AuthEngine from './gql/auth/auth.engine'
 import { userFromAccessToken } from './utils/auth'
@@ -27,6 +28,7 @@ let app = express()
 app.use(helmet())
 app.use(logger('dev'))
 app.use(express.json())
+app.use(cors())
 app.use(
   express.urlencoded({
     extended: false,
