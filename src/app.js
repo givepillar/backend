@@ -69,4 +69,6 @@ server.applyMiddleware({
   app,
 })
 
+app.get('/', (req, res) => res.json({ message: 'All ok' }))
+
 export default app
