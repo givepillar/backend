@@ -14,7 +14,7 @@ export default {
     listSignup: async (_, { email }, ctx) => {
       let mailchimpInstance = 'us20'
       let listUniqueId = '3f09e86dbe'
-      let mailchimpApiKey = 'e336aaf30182035236952901158bfce2-us20-us6'
+      let mailchimpApiKey = process.env.MAILCHIMP_KEY
 
       try {
         await Axios({
