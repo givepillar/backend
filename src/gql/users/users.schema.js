@@ -7,9 +7,20 @@ export default gql`
     viewer: User
   }
 
+  extend type Mutation {
+    listSignup(email: String!): ListSignupResponse
+  }
+
   ###############################################################################
 
   ####################### T Y P E S ##########################################
+
+  type ListSignupResponse implements Response {
+    code: String
+    success: Boolean!
+    message: String
+  }
+
   type User implements Node {
     id: ID!
     firstName: String!
