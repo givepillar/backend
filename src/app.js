@@ -7,6 +7,7 @@ import { ApolloServer, gql } from 'apollo-server-express'
 import schema from './gql/schema'
 import { Model } from 'objection'
 import Knex from 'knex'
+import cors from 'cors'
 import knexConfig from '../knexfile'
 import AuthEngine from './gql/auth/auth.engine'
 import { userFromAccessToken } from './utils/auth'
@@ -27,6 +28,7 @@ let app = express()
 app.use(helmet())
 app.use(logger('dev'))
 app.use(express.json())
+app.use(cors())
 app.use(
   express.urlencoded({
     extended: false,
@@ -39,7 +41,11 @@ const context = async ({ req }) => {
   const token = hasAuth ? req.headers.authentication.split(' ')[1] : ''
 
   // try to grab user with given token
-  const user = hasAuth ? await userFromAccessToken(token) : null
+  let user = null
+
+  try {
+    user = hasAuth ? await userFromAccessToken(token) : null
+  } catch (e) {}
 
   return {
     user,
@@ -62,5 +68,7 @@ const server = new ApolloServer({
 server.applyMiddleware({
   app,
 })
+
+app.get('/', (req, res) => res.json({ message: 'All ok' }))
 
 export default app
