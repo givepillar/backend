@@ -5,8 +5,8 @@ export default gql`
   extend type Query {
     bundleById(id: ID!): BundleResponse!
     bundleBySlug(slug: String!): BundleResponse!
-    trendingBundles: [Bundle!]!
   }
+
   ###############################################################################
 
   ####################### T Y P E S ##########################################
@@ -18,25 +18,37 @@ export default gql`
 
     name: String!
 
-    category: Category!
+    tags: [String!]!
 
     active: Boolean!
 
     slug: String!
 
-    shortDescription: String
+    shortDescription: String # for rendering the bundle on a card, e.g.
+    goals: [String!]!
 
-    description: String
+    strategy: [StrategyItem!]!
 
-    image: Image
-
-    callToAction: String
+    summary: String
 
     lede: String
 
-    organizations: [Organization!]!
+    callToAction: String # statement following the lede, calling for action
+    image: Image
+
+    organizations: [OrganizationAndWhy!]!
 
     donations: DonationsSummary!
+  }
+
+  type OrganizationAndWhy {
+    organization: Organization!
+    why: String!
+  }
+
+  type StrategyItem {
+    title: String!
+    bullets: [String!]!
   }
 
   type BundleResponse implements Response {

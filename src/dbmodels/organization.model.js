@@ -9,21 +9,25 @@ class Organization extends BaseModel {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name'],
+      required: ['name', 'ein', 'shortDescription', 'summary'],
       properties: {
         id: { type: 'string', format: 'uuid' },
         name: { type: 'string' },
         accountId: { type: 'string', format: 'uuid' },
-        addressId: { type: 'string', format: 'uuid' },
+        ein: { type: 'string', format: 'uuid' },
         shortDescription: { type: 'string' },
-        description: { type: 'string' },
-        taxId: { type: 'string' },
-        type: { type: 'string', enum: ['CHARITY'] },
+        summary: { type: 'string' },
+        theirWork: { type: 'object' },
+        accomplishments: { type: 'object' }, // possibly this has to be an array
+
+        imageUrl: { type: 'string' },
+        zipcode: { type: 'string' },
+
+        accountId: { type: 'string', format: 'uuid' },
+
+        zipcode: { type: 'string' },
         slug: { type: 'string' },
-        annualRevenue: { type: 'integer' },
-        categoryId: { type: 'string', format: 'uuid' },
-        impacts: { type: 'object' },
-        imageId: { type: 'string', format: 'uuid' },
+        tags: { type: 'array' },
       },
     }
   }
@@ -31,11 +35,9 @@ class Organization extends BaseModel {
   static get relationMappings() {
     // import account model here
     const Account = require(BaseModel.modelPaths + '/account.model')
-    const Address = require(BaseModel.modelPaths + '/address.model')
-    const Category = require(BaseModel.modelPaths + '/category.model')
-    const Image = require(BaseModel.modelPaths + '/image.model')
-    const Bundle = reqire(BaseModel.modelPaths + 'bundle.model')
-    const OrganizationBundle = reqire(BaseModel.modelPaths + 'organizationbundle.model')
+    const OrgStats = require(BaseMode.modelPths + '/orgstats.model')
+    const Bundle = reqire(BaseModel.modelPaths + '/bundle.model')
+    const OrganizationBundle = reqire(BaseModel.modelPaths + '/organizationbundle.model')
 
     return {
       account: {
@@ -46,28 +48,12 @@ class Organization extends BaseModel {
           to: 'accounts.id',
         },
       },
-      address: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Account,
+      statistics: {
+        relation: Model.HasOneRelation,
+        modelClass: OrgStats,
         join: {
-          from: 'organizations.addressId',
-          to: 'addresses.id',
-        },
-      },
-      category: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Category,
-        join: {
-          from: 'organizations.categoryId',
-          to: 'categories.id',
-        },
-      },
-      image: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Image,
-        join: {
-          from: 'organizations.imageId',
-          to: 'images.id',
+          from: 'organizations.statsId',
+          to: 'orgstats.id',
         },
       },
       bundles: {

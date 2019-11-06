@@ -12,16 +12,18 @@ export default gql`
   type Organization implements Node {
     id: ID!
     name: String!
-    taxId: String
-    image: Image
-    category: Category!
-    address: Address!
-    description: String
+    taxId: String!
+    imageUrl: String!
+    tags: [String!]!
+    zipcode: String
     shortDescription: String
+    summary: String
     slug: String!
-    # info: OrganizationInfo!
-    # statistics: OrganizationStatistics!
-    donations: DonationsSummary!
+
+    theirWork: String! # should be json
+    accomplishments: String! # should be json
+    statistics: OrganizationStatistics!
+    # donations: DonationsSummary!
   }
 
   #   type OrganizationInfo {
@@ -29,9 +31,19 @@ export default gql`
   #     longDescription: String!
   #   }
 
-  #   type OrganizationStatistics {
-  #     revenue: Integer!
-  #   }
+  type OrganizationStatistics implements Node {
+    id: ID!
+    totalExpenses: Int
+    fundraisingExpenses: Int
+    programmingExpenses: Int
+    managementExpenses: Int
+    totalContributions: Int
+    employeeCount: Int
+    volunteerCount: Int
+    executiveSalary: Int
+    foundedYear: String
+    hq: String
+  }
 
   # type OrganizationsConnection implements Pagination {
   #   organizations: [Organization!]!

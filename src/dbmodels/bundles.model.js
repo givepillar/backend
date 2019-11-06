@@ -13,14 +13,16 @@ class Bundle extends BaseModel {
       properties: {
         id: { type: 'string', format: 'uuid' },
         name: { type: 'string' },
-        categoryId: { type: 'string', format: 'uuid' },
+        tags: { type: 'array' },
         active: { type: 'boolean' },
         slug: { type: 'string' },
         shortDescription: { type: 'string' },
-        description: { type: 'string' },
-        imageId: { type: 'string', format: 'uuid' },
-        callToAction: { type: 'string' },
+        summary: { type: 'string' },
+        goals: { type: 'array' },
+        strategy: { type: 'object' },
         lede: { type: 'string' },
+        callToAction: { type: 'string' },
+        imageId: { type: 'string', format: 'uuid' },
       },
     }
   }
@@ -49,14 +51,6 @@ class Bundle extends BaseModel {
         join: {
           from: 'bundles.imageId',
           to: 'images.id',
-        },
-      },
-      category: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Category,
-        join: {
-          from: 'bundles.categoryId',
-          to: 'categories.id',
         },
       },
     }

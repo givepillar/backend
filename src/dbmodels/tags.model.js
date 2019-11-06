@@ -1,14 +1,14 @@
 import BaseModel from './base.model'
 
-class Category extends BaseModel {
+class Tag extends BaseModel {
   static get tableName() {
-    return 'categories'
+    return 'tags'
   }
 
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name', 'color'],
+      required: ['name'],
       properties: {
         id: { type: 'string', format: 'uuid' },
         name: { type: 'string' },
@@ -21,4 +21,4 @@ class Category extends BaseModel {
   }
 }
 
-module.exports = Category
+module.exports = Tag

@@ -8,34 +8,35 @@ module.exports.up = knex => {
     // proxy account for "receiving donations"
     table.string('name').notNullable()
 
-    table
-      .uuid('categoryId')
-      .references('id')
-      .inTable('categories')
+    table.json('tags').nullable()
 
     // whether bundle is currently active or not (otherwise deprecated)
     table.boolean('active').defaultTo(true)
+
+    // technically unique but...
+    table.string('slug').notNullable()
 
     // short description about organization
     table.string('shortDescription').nullable()
 
     // longer description about organization
-    table.string('description').nullable()
+    table.string('summary').nullable()
+
+    table.json('goals').nullable()
+
+    table.json('strategy').nullable()
+
+    // lede for bundle page
+    table.string('lede').nullable()
+
+    // concise call to action statement, following the lede
+    table.string('callToAction').nullable()
 
     // image of bundle
     table
       .uuid('imageId')
       .references('id')
       .inTable('images')
-
-    // concise call to action statement
-    table.string('callToAction').nullable()
-
-    // lede for bundle page
-    table.string('lede').nullable()
-
-    // technically unique but...
-    table.string('slug').notNullable()
   })
 }
 

@@ -14,45 +14,31 @@ module.exports.up = knex =>
       .references('id')
       .inTable('accounts')
 
-    // organization's address
+    // tax id of organization
+    table.string('ein').notNullable()
+
+    // organization's statistics
     table
-      .uuid('addressId')
+      .uuid('statsId')
       .references('id')
-      .inTable('addresses')
+      .inTable('orgstats')
 
     // short description about organization
-    table.string('shortDescription').nullable()
+    table.string('shortDescription').notNullable()
 
-    // longer description about organization
-    table.string('description').nullable()
+    table.string('summary').notNullable()
 
-    // organization type, i.e. "CHARITY", "UNIVERSITY", "PAC"
-    table
-      .enum('type', ['CHARITY'])
-      .notNullable()
-      .defaultTo('CHARITY')
+    table.json('theirWork').nullable() // json object of an organization's work
 
-    // tax id of organization
-    table.string('taxId').nullable()
-
-    // annual revenue of organization
-    table.integer('annualRevenue').nullable()
+    table.json('accomplishments').nullable() // json object/array of organization's accomplishments
 
     // category of organization
-    table
-      .uuid('categoryId')
-      .references('id')
-      .inTable('categories')
-
-    // organization's impacts, stored as json
-    table.json('impacts').nullable()
+    table.json('tags').nullable()
 
     // image of organization
-    table
-      .uuid('imageId')
-      .references('id')
-      .inTable('images')
-      .nullable()
+    table.string('imageUrl').nullable()
+
+    table.string('zipcode').nullable()
 
     table.string('slug').notNullable()
   })
