@@ -19,7 +19,7 @@ import Sendgrid from './datasources/sendgrid.datasource'
 dotenv.config()
 
 // initialize Objection and knex
-const knexConnection = Knex(knexConfig[process.env.NODE_ENV])
+const knexConnection = Knex(knexConfig)
 Model.knex(knexConnection)
 
 let app = express()
