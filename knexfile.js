@@ -6,33 +6,33 @@ const migrations = {
 }
 
 module.exports = {
-  // development: {
-  client: 'pg',
-  connection: process.env.DB_URL,
-  pool: {
-    min: 2,
-    max: 10,
+  development: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations,
   },
-  migrations,
-  // },
 
-  // staging: {
-  //   client: 'postgresql',
-  //   connection: process.env.DB_URL,
-  //   pool: {
-  //     min: POOL_MIN,
-  //     max: POOL_MAX,
-  //   },
-  //   migrations,
-  // },
+  staging: {
+    client: 'postgresql',
+    connection: process.env.DATABASE_URL,
+    pool: {
+      min: POOL_MIN,
+      max: POOL_MAX,
+    },
+    migrations,
+  },
 
-  // production: {
-  //   client: 'postgresql',
-  //   connection: process.env.DB_URL,
-  //   pool: {
-  //     min: POOL_MIN,
-  //     max: POOL_MAX,
-  //   },
-  //   migrations,
-  // },
+  production: {
+    client: 'postgresql',
+    connection: process.env.DATABASE_URL,
+    pool: {
+      min: POOL_MIN,
+      max: POOL_MAX,
+    },
+    migrations,
+  },
 }
