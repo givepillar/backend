@@ -43,9 +43,7 @@ export default gql`
 
   # input to create a donation from viewer (user) to a particular endpoint
   input DonationInput {
-    fromId: ID! # if null then 'viewer' user is the from field
-    toId: ID!
-    toType: DonationRecipientType!
+    bundle: ID!
     amount: Int!
   }
 

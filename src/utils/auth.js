@@ -6,8 +6,10 @@ import { AuthenticationError } from 'apollo-server-core'
 export const userFromAccessToken = async token => {
   try {
     const payload = jwt.verify(token, process.env.SECRET)
+    console.log(payload)
     return await User.query().findById(payload.userId)
   } catch (err) {
+    console.error(err)
     throw new AuthenticationError(err.message)
   }
 }

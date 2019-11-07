@@ -17,29 +17,26 @@ export default gql`
   }
 
   # a color, which has 3 versions: light, medium, dark
-  # type Color {
-  #   light: String!
-  #   standard: String!
-  #   dark: String!
-  # }
-
-  # type Address {
-  #   streetAddress: String
-  #   city: String
-  #   state: String
-  #   country: String
-  #   zip: String!
-  # }
-
-  # type Date {
-  #   year: String!
-  #   month: String!
-  #   day: String!
-  # }
-
-  # interface Node {
-  #   id: ID!
-  # }
+  type Color {
+    light: String!
+    standard: String!
+    dark: String!
+  }
+  type Address {
+    streetAddress: String
+    city: String
+    state: String
+    country: String
+    zip: String!
+  }
+  type Date {
+    year: String!
+    month: String!
+    day: String!
+  }
+  interface Node {
+    id: ID!
+  }
 
   enum Role {
     DONOR
