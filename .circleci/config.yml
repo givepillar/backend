@@ -50,5 +50,6 @@ jobs:
 
       # !!! This runs a deployment
       - run:
+          working_directory: ~/app
           name: Deploying
           command: eb deploy -v --staged
