@@ -18,11 +18,7 @@ module.exports = {
 
   staging: {
     client: 'postgresql',
-    connection: {
-      database: 'staging_db',
-      user: process.env.POSTGRES_USERNAME,
-      password: process.env.POSTGRES_PASSWORD,
-    },
+    connection: process.env.DB_URL,
     pool: {
       min: POOL_MIN,
       max: POOL_MAX,
@@ -32,11 +28,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: {
-      database: 'production_db',
-      user: process.env.POSTGRES_USERNAME,
-      password: process.env.POSTGRES_PASSWORD,
-    },
+    connection: process.env.DB_URL,
     pool: {
       min: POOL_MIN,
       max: POOL_MAX,
