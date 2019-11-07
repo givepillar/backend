@@ -37,7 +37,7 @@ jobs:
           name: Migrate Database
           working_directory: ~/app
           command: |
-            make db/up
+            npx knex-migrate up
 
       # !!! This installs AWS Elastic Beanstalk CLI 'awsebcli' !!!
       - run:
