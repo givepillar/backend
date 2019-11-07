@@ -34,6 +34,12 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
+          name: Build
+          working_directory: ~/app
+          command: |
+            yarn build
+
+      - run:
           name: Migrate Database
           working_directory: ~/app
           command: |
