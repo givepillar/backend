@@ -2,9 +2,9 @@ import { gql } from 'apollo-server-express'
 
 export default gql`
   ####################### Q U E R I E S ##########################################
-  extend type Query {
-    transactionFromId(id: ID!): TransactionResponse!
-  }
+  # extend type Query {
+  #   # transactionFromId(id: ID!): TransactionResponse!
+  # }
   ###############################################################################
 
   ####################### T Y P E S ##########################################
@@ -16,12 +16,10 @@ export default gql`
 
     # 'from': the user the transaction comes from
     # from: User!
-    from: User!
-
+    from: User! # TODO: privileged -- should not be exposed
     # 'to': the organization receiving the transaction
     # to: Organization!
-    to: Organization!
-
+    to: Organization! # TODO: privileged -- should not be exposed.
     # 'amount': the amount of the transaction in cents
     amount: Int!
 
@@ -30,12 +28,12 @@ export default gql`
     date: Date!
   }
 
-  type TransactionResponse implements Response {
-    transaction: Transaction
-    code: String
-    success: Boolean!
-    message: String
-  }
+  # type TransactionResponse implements Response {
+  #   transaction: Transaction
+  #   code: String
+  #   success: Boolean!
+  #   message: String
+  # }
   ###########################################################################
 
   ####################### M U T A T I O N S ##########################################

@@ -17,8 +17,9 @@ const packageDbOrg = ({ orgFromDb }) => ({
 
 export const OrganizationsEngine = context => ({
   fromId: async id => {
-    const org = packageDbOrg(Organizations.query({ id: id }).first())
-    const stats = org ? org.$relatedQuery('statistics') : null
+    const org = packageDbOrg(Organizations.findById(id).first())
+    const stats = org.statistics
+    // const stats = org ? org.$relatedQuery('statistics') : null
     return {
       organization: {
         ...org,
@@ -29,7 +30,8 @@ export const OrganizationsEngine = context => ({
   },
   fromName: slug => {
     const org = packageDbOrg(Organizations.query({ slug: slug }).first())
-    const stats = org ? org.$relatedQuery('statistics') : null
+    const stats = org.statistics
+    // const stats = org ? org.$relatedQuery('statistics') : null
     return {
       organization: {
         ...org,

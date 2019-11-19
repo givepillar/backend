@@ -34,7 +34,7 @@ export default gql`
     lede: String
 
     callToAction: String # statement following the lede, calling for action
-    image: Image
+    imageUrl: String
 
     organizations: [OrganizationAndWhy!]!
 

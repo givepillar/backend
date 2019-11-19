@@ -31,6 +31,8 @@ export default gql`
 
     frequency: DonationFrequency!
 
+    transactions: [Transaction!]!
+
     # 'charge': the charge that the transaction is associated with
     # charge: Charge!
     charge: Int!

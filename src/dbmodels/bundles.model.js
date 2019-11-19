@@ -22,7 +22,7 @@ class Bundle extends BaseModel {
         strategy: { type: 'object' },
         lede: { type: 'string' },
         callToAction: { type: 'string' },
-        imageId: { type: 'string', format: 'uuid' },
+        image: { type: 'string' },
       },
     }
   }
@@ -43,14 +43,6 @@ class Bundle extends BaseModel {
             from: 'organizations_bundles.bundleId',
             to: 'organizations_bundles.organizationId',
           },
-        },
-      },
-      image: {
-        relation: Model.HasOneRelation,
-        modelClass: Image,
-        join: {
-          from: 'bundles.imageId',
-          to: 'images.id',
         },
       },
     }
