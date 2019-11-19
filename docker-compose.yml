@@ -24,7 +24,7 @@ services:
     environment:
       - PORT=4000
       - NODE_ENV=development
-      - DB_URL=postgres://my_butt:my_ass@db:5432/pillar
+      - DATABASE_URL=postgres://my_butt:my_ass@db:5432/pillar
     links:
       - db
 volumes:

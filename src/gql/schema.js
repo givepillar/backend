@@ -14,8 +14,6 @@ import donationsSchema from './donations/donations.schema'
 import donationsResolvers from './donations/donations.resolvers'
 import chargesSchema from './charges/charges.schema'
 import chargesResolvers from './charges/charges.resolvers'
-import categoriesSchema from './categories/categories.schema'
-import categoriesResolvers from './categories/categories.resolvers'
 import authSchema from './auth/auth.schema'
 import authResolvers from './auth/auth.resolvers'
 
@@ -27,7 +25,6 @@ const typeDefs = [
   usersSchema,
   transactionsSchema,
   chargesSchema,
-  categoriesSchema,
   authSchema,
 ]
 
@@ -39,7 +36,6 @@ const resolvers = merge(
   bundlesResolvers,
   donationsResolvers,
   chargesResolvers,
-  categoriesResolvers,
   authResolvers
 )
 

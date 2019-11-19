@@ -7,14 +7,14 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:12
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/repo
+    working_directory: ~/app
 
     steps:
       - checkout
@@ -26,12 +26,36 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: yarn install --production=false
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      run tests!
-      # - run: yarn test
+      - run:
+          name: Build
+          working_directory: ~/app
+          command: |
+            yarn build
+
+      - run:
+          name: Migrate Database
+          working_directory: ~/app
+          command: |
+            npx knex-migrate up
+
+      # !!! This installs AWS Elastic Beanstalk CLI 'awsebcli' !!!
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/app
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+
+      # !!! This runs a deployment
+      - run:
+          working_directory: ~/app
+          name: Deploying
+          command: eb deploy -v --staged
